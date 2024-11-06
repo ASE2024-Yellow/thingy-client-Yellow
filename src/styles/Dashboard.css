@@ -1,0 +1,107 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f0f2f5; /* Light background color */
+    min-height: 100vh; /* Ensure full height of the viewport */
+    position: relative; /* Make this relative for absolute positioning of the button */
+    margin-top: 20%;
+}
+
+/* Container for top buttons */
+.top-buttons {
+    position: fixed;
+    top: 10px;
+    right: 290px;
+    display: flex;
+    gap: 20px; /* Space between buttons */
+    z-index: 1000;
+}
+
+/* Profile button */
+.profile-button {
+    background-color: #4CAF50; /* Green color */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.8rem;
+    width: 80px; /* Set width for profile button */
+    height: 50px; /* Set height for profile button */
+}
+
+.profile-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Logout button */
+.logout-button {
+    background-color: #f72121;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.8rem;
+    width: 80px; /* Set width for logout button */
+    height: 50px; /* Set height for logout button */
+}
+
+.logout-button:hover {
+    background-color: #ff1744; /* Darker red on hover */
+}
+
+.dashboard-header {
+    width: 100%;
+    background-color: #4CAF50; /* Header background color */
+    color: white; /* Text color */
+    padding: 20px; /* Add padding for the header */
+    text-align: center; /* Center text */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-bottom: 20px; /* Space below the header */
+}
+
+.welcome-message {
+    margin: 0; /* Remove default margin */
+    font-size: 1.5rem; /* Increase font size */
+}
+
+.transport-selection {
+    margin-top: 30px; /* Increase space above selection */
+    text-align: center; /* Center the transport selection heading */
+}
+
+.transport-options {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping of options */
+    justify-content: center; /* Center options */
+    gap: 20px; /* Space between options */
+}
+
+.transport-option {
+    background-color: #fff; /* White background for options */
+    border: 1px solid #ccc; /* Border for options */
+    border-radius: 8px; /* Rounded corners */
+    padding: 15px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center; /* Center text in options */
+    transition: transform 0.3s; /* Transition for hover effect */
+    width: 200px; /* Set a fixed width for transport options */
+}
+
+.transport-option:hover {
+    transform: scale(1.05); /* Scale up on hover */
+}
+
+.transport-option img {
+    max-width: 150px; /* Increase max width for images */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 10px; /* Space below images */
+}
+
