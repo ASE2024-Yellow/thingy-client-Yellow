@@ -7,7 +7,7 @@ import Dashboard from "./components/Dashboard";
 import ProtectedRoute from './components/ProtectedRoute';
 import Profile from './components/Profile';
 import UsersList from './components/UsersList';
-import VehiclePage from "./components/VehiclePage";
+
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
           <Route path="/user/signin" element={<LoginForm />} />
           <Route path="/user/signup" element={<SignupForm />} />
           <Route path="/users" element={<UsersList />} />
-        
+
           {/* Protect the Profile route */}
           <Route path="/user/profile" element={
             <ProtectedRoute>
@@ -32,8 +32,6 @@ function App() {
               <Dashboard />
             </ProtectedRoute>
           } />
-         <Route path="/vehicle/:type" element={<ProtectedRoute><VehiclePage /></ProtectedRoute>} /> 
-
         </Routes>
       </div>
     </Router>
