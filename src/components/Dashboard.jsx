@@ -24,8 +24,8 @@ const Dashboard = () => {
     navigate("/users");
   };
 
-  const handleTransportSelect = (transportType) => {
-    console.log(`Selected transport type: ${transportType}`);
+  const handleTransportClick = (type) => {
+    navigate(`/vehicle/${type}`);
   };
 
   return (
@@ -75,7 +75,7 @@ const Dashboard = () => {
               <div
                 key={item.type}
                 className="bg-gray-800 bg-opacity-50 p-4 rounded-lg shadow-md hover:transform hover:scale-105 transition duration-300 cursor-pointer"
-                onClick={() => handleTransportSelect(item.type)}
+                onClick={() => handleTransportClick(item.type)}
               >
                 <div className="w-32 h-32 mx-auto mb-4">
                   <Lottie animationData={item.animation} loop={true} />

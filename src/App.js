@@ -7,6 +7,7 @@ import Dashboard from "./components/Dashboard";
 import ProtectedRoute from './components/ProtectedRoute';
 import Profile from './components/Profile';
 import UsersList from './components/UsersList';
+import VehiclePage from "./components/VehiclePage";
 
 
 function App() {
@@ -32,6 +33,8 @@ function App() {
               <Dashboard />
             </ProtectedRoute>
           } />
+          <Route path="/vehicle/:type" element={<ProtectedRoute><VehiclePage /></ProtectedRoute>} />
+
         </Routes>
       </div>
     </Router>
