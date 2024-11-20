@@ -79,7 +79,7 @@ const FlipDetection = ({ token }) => {
 
     useEffect(() => {
         if (timer >= 30 && (currentFlipState === "ON_SIDE" || currentFlipState === "UPSIDE_DOWN")) {
-            alert(`Flip state has been ${currentFlipState} for more than 30 seconds!`);
+            alert(`Flip state has been ${currentFlipState} for more than 30 seconds! EMERGENCY CALL STARTING!`);
             setTimer(0); // Reset the timer after alert
         }
     }, [timer, currentFlipState]);

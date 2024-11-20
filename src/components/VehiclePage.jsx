@@ -77,7 +77,7 @@ const VehiclePage = () => {
                     "Content-Type": "application/json",
                 },
             });
-alert("Thingy bound successfully!");
+            alert("Thingy bound successfully!");
             if (response.ok) {
                 const result = await response.json();
                 setIsBound(true);
@@ -182,23 +182,29 @@ alert("Thingy bound successfully!");
         }
     };
 
+    const handleNavigateDashboard = () => {
+        navigate("/dashboard");
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        navigate("/user/signin");
+    };
+
     return (
         <div className={`min-h-screen bg-gradient-to-br ${getBackgroundGradient(sensorData.temp)} p-6 transition-colors duration-1000`}>
             <div className="max-w-4xl mx-auto">
                 <div className="flex justify-between mb-6">
                     <button
                         className="bg-yellow-500 text-black px-4 py-2 rounded-lg hover:bg-yellow-400 transition duration-300"
-                        onClick={() => navigate('/dashboard')}
+                        onClick={handleNavigateDashboard}
                     >
                         Back to Dashboard
                     </button>
                     <button
                         className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300"
-                        onClick={() => {
-                            localStorage.removeItem('token');
-                            localStorage.removeItem('username');
-                            navigate("/user/signin");
-                        }}
+                        onClick={handleLogout}
                     >
                         Logout
                     </button>
