@@ -1,9 +1,19 @@
 // ButtonDetection.jsx
 import React, { useEffect, useState } from "react";
+import { subscribeToButtons } from "./subscriptionService";
 
 const ButtonDetection = ({ token }) => {
     const [lastButtonState, setLastButtonState] = useState(null);
 
+    useEffect(() => {
+        const initiateSubscription = async () => {
+            await subscribeToButtons(); // Automatically subscribes on mount
+        };
+        initiateSubscription();
+        fetchButtonData();
+        const interval = setInterval(fetchButtonData, 3000); // Fetch data every 3 seconds
+        return () => clearInterval(interval);
+    }, []);
     const fetchButtonData = async () => {
         try {
             const response = await fetch("http://localhost:3000/things/buttons", {

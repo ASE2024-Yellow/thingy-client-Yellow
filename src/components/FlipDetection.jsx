@@ -1,11 +1,24 @@
 import React, { useEffect, useState, useRef } from "react";
+import { subscribeToFlips } from "./subscriptionService";
+
 
 const FlipDetection = ({ token }) => {
     const [flipData, setFlipData] = useState([]);
     const [highlight, setHighlight] = useState(false);
-    const [currentFlipState, setCurrentFlipState] = useState('');
+    const [currentFlipState, setCurrentFlipState] = useState("");
     const [timer, setTimer] = useState(0);
     const timerRef = useRef(null);
+
+    useEffect(() => {
+        const initiateSubscription = async () => {
+            await subscribeToFlips(); // Automatically subscribes on mount
+        };
+        initiateSubscription();
+        fetchFlipData();
+        const interval = setInterval(fetchFlipData, 3000); // Fetch data every 3 seconds
+        return () => clearInterval(interval);
+    }, []);
+
 
     const fetchFlipData = async () => {
         try {

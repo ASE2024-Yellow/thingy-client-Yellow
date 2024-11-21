@@ -78,7 +78,7 @@ const Dashboard = () => {
                 onClick={() => handleTransportClick(item.type)}
               >
                 <div className="w-32 h-32 mx-auto mb-4">
-                  <Lottie animationData={item.animation} loop={true} />
+                  {/*<Lottie animationData={item.animation} loop={true} />*/}
                 </div>
                 <p className="text-yellow-300 font-semibold text-center">{item.label}</p>
               </div>
