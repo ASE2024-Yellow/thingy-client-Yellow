@@ -75,25 +75,44 @@ const FlipDetection = ({ token }) => {
     }, [token]);
 
     useEffect(() => {
-        if (currentFlipState === "ON_SIDE" || currentFlipState === "UPSIDE_DOWN") {
-            if (!timerRef.current) {
-                timerRef.current = setInterval(() => {
-                    setTimer(prev => prev + 1);
-                }, 1000);
-            }
+        if (currentFlipState === "ON_SIDE") {
+            // Reset the timer and start a new one for ON_SIDE
+            clearInterval(timerRef.current);
+            timerRef.current = null;
+            setTimer(0);
+
+            timerRef.current = setInterval(() => {
+                setTimer(prev => prev + 1);
+            }, 1000);
+
+        } else if (currentFlipState === "UPSIDE_DOWN") {
+            // Reset the timer and start a new one for UPSIDE_DOWN
+            clearInterval(timerRef.current);
+            timerRef.current = null;
+            setTimer(0);
+
+            timerRef.current = setInterval(() => {
+                setTimer(prev => prev + 1);
+            }, 1000);
         } else {
+            // Reset the timer and stop it for NORMAL
             clearInterval(timerRef.current);
             timerRef.current = null;
             setTimer(0);
         }
 
-        return () => clearInterval(timerRef.current);
+        return () => clearInterval(timerRef.current); // Cleanup
     }, [currentFlipState]);
+
 
     useEffect(() => {
         if (timer >= 30 && (currentFlipState === "ON_SIDE" || currentFlipState === "UPSIDE_DOWN")) {
             alert(`Flip state has been ${currentFlipState} for more than 30 seconds! EMERGENCY CALL STARTING!`);
+
+            clearInterval(timerRef.current);
+            timerRef.current = null;
             setTimer(0); // Reset the timer after alert
+
         }
     }, [timer, currentFlipState]);
 
