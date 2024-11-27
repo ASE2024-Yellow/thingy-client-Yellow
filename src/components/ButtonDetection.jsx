@@ -11,7 +11,7 @@ const ButtonDetection = ({ token }) => {
         };
         initiateSubscription();
         fetchButtonData();
-        const interval = setInterval(fetchButtonData, 3000); // Fetch data every 3 seconds
+        const interval = setInterval(fetchButtonData, 1000); // Fetch data every second
         return () => clearInterval(interval);
     }, []);
     const fetchButtonData = async () => {
@@ -29,7 +29,7 @@ const ButtonDetection = ({ token }) => {
             if (latestButtonState !== lastButtonState) {
                 setLastButtonState(latestButtonState);
                 if (latestButtonState === "1") {
-                    alert("Emergency service needed!");
+                    //alert("Emergency service needed!");
                 }
             }
         } catch (error) {
@@ -39,7 +39,7 @@ const ButtonDetection = ({ token }) => {
 
     useEffect(() => {
         fetchButtonData();
-        const interval = setInterval(fetchButtonData, 3000); // Fetch data every 5 seconds
+        const interval = setInterval(fetchButtonData, 1000); // Fetch data every second
         return () => clearInterval(interval);
     }, [token, lastButtonState]);
 
