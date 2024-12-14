@@ -1,10 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Lottie from "lottie-react";
-import bikeAnimation from "../assets/Bike.json";
-import wheelchairAnimation from "../assets/wheelchair.json";
-import scooterAnimation from "../assets/scooter.json";
-import vehicleAnimation from "../assets/vehicle.json";
+import bikeImage from "../assets/Bike.png";
+import wheelchairImage from "../assets/wheelchair.png";
+import scooterImage from "../assets/scooter.png";
+import vehicleImage from "../assets/vehicle.png";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -67,10 +66,10 @@ const Dashboard = () => {
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { type: "bike", animation: bikeAnimation, label: "Bike" },
-              { type: "wheelchair", animation: wheelchairAnimation, label: "Wheelchair" },
-              { type: "scooter", animation: scooterAnimation, label: "Scooter" },
-              { type: "vehicle", animation: vehicleAnimation, label: "Vehicle" },
+              { type: "bike", image: bikeImage, label: "Bike" },
+              { type: "wheelchair", image: wheelchairImage, label: "Wheelchair" },
+              { type: "scooter", image: scooterImage, label: "Scooter" },
+              { type: "vehicle", image: vehicleImage, label: "Vehicle" },
             ].map((item) => (
               <div
                 key={item.type}
@@ -78,7 +77,7 @@ const Dashboard = () => {
                 onClick={() => handleTransportClick(item.type)}
               >
                 <div className="w-32 h-32 mx-auto mb-4">
-                  {/*<Lottie animationData={item.animation} loop={true} />*/}
+                  <img src={item.image} alt={item.label} className="w-full h-full object-contain" />
                 </div>
                 <p className="text-yellow-300 font-semibold text-center">{item.label}</p>
               </div>

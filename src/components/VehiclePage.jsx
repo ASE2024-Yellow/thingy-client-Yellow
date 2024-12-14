@@ -7,6 +7,8 @@ import scooterAnimation from "../assets/scooter.json";
 import wheelchairAnimation from "../assets/wheelchair.json";
 import FlipDetection from "./FlipDetection";
 import ButtonDetection from "./ButtonDetection";
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+
 
 const VehiclePage = () => {
     const { type } = useParams();
@@ -40,6 +42,8 @@ const VehiclePage = () => {
             ? "from-blue-300 via-blue-200 to-blue-100"
             : "from-pink-300 via-yellow-200 to-yellow-100";
     };
+
+    
 
     useEffect(() => {
         if (!token) {
@@ -174,7 +178,7 @@ const VehiclePage = () => {
 
             const results = await Promise.all(promises);
             const combinedData = results.flat().sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-            setPastSensorData(combinedData.slice(0, 10)); // Keep only the last 10 entries
+            setPastSensorData(combinedData.slice(0, 60)); // Keep only the last 10 entries
             setHighlight(true);
             setTimeout(() => setHighlight(false), 500); // Remove highlight after 500ms
         } catch (error) {
@@ -280,6 +284,41 @@ const VehiclePage = () => {
 
                     {showHistory && (
                         <div className="mt-8">
+                            
+                            
+                            <h3 className="text-2xl font-bold mb-4 text-gray-800">TEMP plot</h3>
+                            <LineChart width={600} height={300} data={pastSensorData.filter(data => data.type === "TEMP")} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                                <Line type="monotone" dataKey="value" stroke="#8884d8" />
+                                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                                <XAxis dataKey="timestamp" />
+                                <YAxis />
+                                <Tooltip />
+                            </LineChart>
+
+                            <h3 className="text-2xl font-bold mb-4 text-gray-800">HUMID plot</h3>
+                            <LineChart width={600} height={300} data={pastSensorData.filter(data => data.type === "HUMID")} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                                <Line type="monotone" dataKey="value" stroke="#8884d8" />
+                                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                                <XAxis dataKey="timestamp" />
+                                <YAxis />
+                                <Tooltip />
+                            </LineChart>
+                            <h3 className="text-2xl font-bold mb-4 text-gray-800">CO2 plot</h3>
+                            <LineChart width={600} height={300} data={pastSensorData.filter(data => data.type === "CO2_EQUIV")} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                                <Line type="monotone" dataKey="value" stroke="#8884d8" />
+                                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                                <XAxis dataKey="timestamp" />
+                                <YAxis />
+                                <Tooltip />
+                            </LineChart>
+                            <h3 className="text-2xl font-bold mb-4 text-gray-800">AIR_QUAL plot</h3>
+                            <LineChart width={600} height={300} data={pastSensorData.filter(data => data.type === "AIR_QUAL")} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                                <Line type="monotone" dataKey="value" stroke="#8884d8" />
+                                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                                <XAxis dataKey="timestamp" />
+                                <YAxis />
+                                <Tooltip />
+                            </LineChart>
                             <h3 className="text-2xl font-bold mb-4 text-gray-800">Past Sensor Data</h3>
                             <ul className="space-y-2">
                                 {pastSensorData.map((data, index) => (
@@ -294,6 +333,7 @@ const VehiclePage = () => {
                                 ))}
                             </ul>
                         </div>
+ 
                     )}
 
                     {showFlipDetection && <FlipDetection token={token} />}
