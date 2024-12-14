@@ -1,15 +1,18 @@
+import { NativeEventSource, EventSourcePolyfill } from 'event-source-polyfill';
+
 const subscribeToThingyUpdates = async (type, token) => {
     try {
-        const response = await fetch(`http://localhost:3000/things/${type}/subscribe`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const eventSource = new EventSourcePolyfill(`http://localhost:3000/things/${type}/subscribe`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
 
-        if (!response.ok) {
-            throw new Error(`Failed to subscribe to ${type}: ${response.statusText}`);
-        }
+        // if (!response.ok) {
+        //     throw new Error(`Failed to subscribe to ${type}: ${response.statusText}`);
+        // }
 
         console.log(`Subscribed to ${type} successfully`);
     } catch (error) {
