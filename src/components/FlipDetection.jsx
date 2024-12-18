@@ -1,14 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
 import { subscribeToFlips } from "./subscriptionService";
 
+
 const FlipDetection = ({ token }) => {
     const [flipData, setFlipData] = useState([]);
     const [highlight, setHighlight] = useState(false);
     const [currentFlipState, setCurrentFlipState] = useState("");
     const [timer, setTimer] = useState(0);
-    const [ledColor, setLedColor] = useState('blue');
     const timerRef = useRef(null);
-    const ledTimerRef = useRef(null);
+
+    
 
     
 
@@ -26,6 +27,7 @@ const FlipDetection = ({ token }) => {
             clearInterval(interval_flip);
         }
     }, []);
+
 
     const fetchFlipData = async () => {
         try {
@@ -77,22 +79,6 @@ const FlipDetection = ({ token }) => {
         }
     };
 
-    const changeLedColor = async (color) => {
-        try {
-            const response = await fetch(`http://localhost:3000/things/LED/setColor/${color}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            const result = await response.json();
-            console.log(result);
-        } catch (error) {
-            console.error("Failed to change LED color:", error);
-        }
-    };
-
     useEffect(() => {
         fetchFlipData();
         const interval = setInterval(fetchFlipData, 1000); // Fetch data every 1 second
@@ -106,36 +92,34 @@ const FlipDetection = ({ token }) => {
     }, [token]);
 
     useEffect(() => {
-        if (currentFlipState === "ON_SIDE" || currentFlipState === "UPSIDE_DOWN") {
-            // Reset the timer and start a new one for ON_SIDE or UPSIDE_DOWN
+        if (currentFlipState === "ON_SIDE") {
+            // Reset the timer and start a new one for ON_SIDE
             clearInterval(timerRef.current);
+            timerRef.current = null;
+            setTimer(0);
+
             timerRef.current = setInterval(() => {
                 setTimer(prev => prev + 1);
             }, 1000);
 
-            // Start changing LED color every 10 seconds
-            clearInterval(ledTimerRef.current);
-            ledTimerRef.current = setInterval(() => {
-                const newColor = ledColor === 'blue' ? 'red' : ledColor === 'red' ? 'green' : 'blue';
-                setLedColor(newColor);
-                changeLedColor(newColor);
-            }, 10000); // Change color every 10 seconds
+        } else if (currentFlipState === "UPSIDE_DOWN") {
+            // Reset the timer and start a new one for UPSIDE_DOWN
+            clearInterval(timerRef.current);
+            timerRef.current = null;
+            setTimer(0);
 
+            timerRef.current = setInterval(() => {
+                setTimer(prev => prev + 1);
+            }, 1000);
         } else {
             // Reset the timer and stop it for NORMAL
             clearInterval(timerRef.current);
+            timerRef.current = null;
             setTimer(0);
-
-            // Stop changing LED color
-            clearInterval(ledTimerRef.current);
         }
 
-        return () => {
-            clearInterval(timerRef.current); // Cleanup
-            clearInterval(ledTimerRef.current); // Cleanup
-        };
+        return () => clearInterval(timerRef.current); // Cleanup
     }, [currentFlipState]);
-
 
 
     //LED change
@@ -213,12 +197,14 @@ const FlipDetection = ({ token }) => {
 
 
     //alert
-
     useEffect(() => {
         if (timer >= 30 && (currentFlipState === "ON_SIDE" || currentFlipState === "UPSIDE_DOWN")) {
             alert(`Flip state has been ${currentFlipState} for more than 30 seconds! EMERGENCY CALL STARTING!`);
 
+            clearInterval(timerRef.current);
+            timerRef.current = null;
             setTimer(0); // Reset the timer after alert
+
         }
 
     }, [timer, currentFlipState]);
